@@ -1,10 +1,11 @@
-import React, { Component } from "react";
-import AsyncSelect from "react-select/async";
-import debounce from "debounce-promise";
+import React, { useState } from "react";
+import { debounce } from "lodash";
 
-const promiseOptions = inputValue => {
-  return new Promise(async resolve => {
+const AthleteSelect = ({ onClick, onFocusIn, onFocusOut, isOpen }) => {
 
+  let [results, setResults] = useState([]);
+
+  const optionsAsync = async query => {
     const results = await fetch("https://results.nyrr.org/api/runners/search", {
       "headers": {
         "accept": "application/json, text/plain, */*",
@@ -17,7 +18,7 @@ const promiseOptions = inputValue => {
       "referrer": "https://results.nyrr.org/home",
       "referrerPolicy": "no-referrer-when-downgrade",
       "body": JSON.stringify({
-        "searchString": inputValue,
+        "searchString": query,
         "pageIndex": 1,
         "pageSize": 4,
         "sortColumn": null,
@@ -28,33 +29,47 @@ const promiseOptions = inputValue => {
     });
 
     const r = await results.json();
-    const b = r.response.items.map(x => {
-      return {
-        "label": `${x["firstName"]} ${x["lastName"]}`,
-        "value": `${x["firstName"]} ${x["lastName"]}`
-      };
-    });
+    setResults(r.response.items);
+  };
 
-    resolve(b);
+  let debounced;
 
-  });
+  const onChange = e => {
+
+    /* signal to React not to nullify the event object */
+    e.persist();
+
+    if (true) {
+      if (!debounced) {
+        debounced = debounce(() => {
+          let searchString = e.target.value;
+          optionsAsync(searchString);
+        }, 300);
+      }
+      debounced();
+    } else {
+      setResults([
+        { id: 25695694, label: "Benjamin Toomer" },
+        { id: 25695694, label: "Benjamin Coomer" },
+        { id: 25695694, label: "Benjamin James" }
+      ]);
+    }
+
+  };
+
+  return (
+    <>
+      <input type="text" onFocus={onFocusIn} onMouseDown={onFocusOut} onChange={onChange}/>
+      <div>
+        {isOpen && results.map((r, i) =>
+          <div className="box" key={i}
+               onClick={x => onClick(r.runnerId)}>
+            {r.firstName} {r.lastName}
+          </div>)}
+      </div>
+    </>);
+
+
 };
 
-export default class AthleteSelect extends Component {
-
-  constructor() {
-    super();
-  }
-
-  onInputChange(value) {
-
-    // todo : get the athlete events
-
-  }
-
-  render() {
-    return (
-      <AsyncSelect onChange={this.onInputChange} cacheOptions loadOptions={debounce(promiseOptions, 250)}/>
-    );
-  }
-}
+export default AthleteSelect;
