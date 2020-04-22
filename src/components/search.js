@@ -42,21 +42,13 @@ const AthleteSelect = ({ onClick, onFocusIn, onFocusOut, isOpen }) => {
     /* signal to React not to nullify the event object */
     e.persist();
 
-    if (true) {
-      if (!debounced) {
-        debounced = debounce(() => {
-          let searchString = e.target.value;
-          optionsAsync(searchString);
-        }, 300);
-      }
-      debounced();
-    } else {
-      setResults([
-        { id: 25695694, label: "Benjamin Toomer" },
-        { id: 25695694, label: "Benjamin Coomer" },
-        { id: 25695694, label: "Benjamin James" },
-      ]);
+    if (!debounced) {
+      debounced = debounce(() => {
+        let searchString = e.target.value;
+        optionsAsync(searchString);
+      }, 300);
     }
+    debounced();
 
   };
 
