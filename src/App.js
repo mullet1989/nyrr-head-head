@@ -35,9 +35,9 @@ function App() {
     if (Object.keys(bothRaced).length) {
       return (
         <div className="row">
-          <div className="column">Athlete 1</div>
-          <div className="column"></div>
-          <div className="column">Athlete 2</div>
+          <div className="column"/>
+          <div className="column"/>
+          <div className="column"/>
         </div>
       );
     }
@@ -48,17 +48,22 @@ function App() {
     <div className="container">
 
       <div className="row">
-        <div className="column">
-          <h1>HEAD TO HEAD</h1>
+        <div className="column" style={{ marginTop: "10px" }}>
+          <h1 style={{ textAlign: "center" }}>NYRR HEAD TO HEAD</h1>
+          <div style={{ padding: "10px", borderLeft: ".3rem solid #9b4dca", backgroundColor: "#f4f5f6" }}>
+            <span>search two athletes to compare their results in nyrr history</span>
+          </div>
         </div>
       </div>
 
       <div className="row">
         <div className="column">
+          <h4 style={{ textAlign: "left", marginTop: "2rem" }}>RED CORNER 🥊</h4>
           <Participant setParticipantRaces={x => setRaces(x, null)}/>
         </div>
 
         <div className="column">
+          <h4 style={{ textAlign: "right", marginTop: "2rem" }}>BLUE CORNER</h4>
           <Participant setParticipantRaces={x => setRaces(null, x)}/>
         </div>
       </div>
@@ -66,15 +71,33 @@ function App() {
       <div className="row">
         <div className="column" style={{ textAlign: "center" }}>
           {headToHead()}
-          {bothRaced && Object.entries(bothRaced).map(([k, v]) => {
-            return (
-              <div className="row flex flex-middle" key={k}>
-                <div className="column">{bothRaced[k][0].actualTime}</div>
-                <div className="column">{bothRaced[k][0].eventName}</div>
-                <div className="column">{bothRaced[k][1].actualTime}</div>
-              </div>
-            );
-          })}
+          {bothRaced && Object.keys(bothRaced).length ? Object.entries(bothRaced).map(([k, v]) => {
+              return (
+                <div className="row flex flex-middle" style={{ marginTop: "10px", marginBottom: "10px" }} key={k}>
+                  <div
+                    style={{
+                      backgroundColor: bothRaced[k][0].actualTime < bothRaced[k][1].actualTime ? "darkseagreen" : "lightcoral",
+                      fontWeight: "bold",
+                      borderRadius: "25px",
+                      color: "black",
+                    }}
+                    className="column">{bothRaced[k][0].actualTime}</div>
+                  <div className="column">{bothRaced[k][0].eventName}</div>
+                  <div
+                    style={{
+                      backgroundColor: bothRaced[k][0].actualTime >= bothRaced[k][1].actualTime ? "darkseagreen" : "lightcoral",
+                      fontWeight: "bold",
+                      borderRadius: "25px",
+                      color: "black",
+                    }}
+                    className="column">{bothRaced[k][1].actualTime}</div>
+                </div>
+              );
+            })
+            : bothRaced && p1Races.length && p2Races.length ?
+              <div>sorry, no races in common 😥</div>
+              : <div/>
+          }
         </div>
       </div>
     </div>

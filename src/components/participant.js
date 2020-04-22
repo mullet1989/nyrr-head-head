@@ -20,7 +20,7 @@ const Participant = ({ setParticipantRaces }) => {
           "sec-fetch-dest": "empty",
           "sec-fetch-mode": "cors",
           "sec-fetch-site": "same-origin",
-          "token": "6112c32703f442f0"
+          "token": "6112c32703f442f0",
         },
         "referrer": "https://results.nyrr.org/home",
         "referrerPolicy": "no-referrer-when-downgrade",
@@ -32,10 +32,10 @@ const Participant = ({ setParticipantRaces }) => {
           "pageIndex": 1,
           "pageSize": 51,
           "sortColumn": "EventDate",
-          "sortDescending": true
+          "sortDescending": true,
         }),
         "method": "POST",
-        "mode": "cors"
+        "mode": "cors",
       });
       const rs = await response.json();
       setRaces(rs.response.items);
@@ -50,7 +50,7 @@ const Participant = ({ setParticipantRaces }) => {
         "distanceName": "5 kilometers",
         "startDateTime": "2020-03-01T09:00:00",
         "actualTime": "0:15:17",
-        "actualPace": "04:56"
+        "actualPace": "04:56",
       }, {
         "runnerId": "25641640",
         "bib": "4210",
@@ -60,7 +60,7 @@ const Participant = ({ setParticipantRaces }) => {
         "distanceName": "4 miles",
         "startDateTime": "2020-02-02T09:00:00",
         "actualTime": "0:19:55",
-        "actualPace": "04:59"
+        "actualPace": "04:59",
       }, {
         "runnerId": "25081762",
         "bib": "3182",
@@ -70,7 +70,7 @@ const Participant = ({ setParticipantRaces }) => {
         "distanceName": "4 miles",
         "startDateTime": "2020-01-01T12:00:01",
         "actualTime": "0:19:51",
-        "actualPace": "04:58"
+        "actualPace": "04:58",
       }, {
         "runnerId": "25054225",
         "bib": "3202",
@@ -80,7 +80,7 @@ const Participant = ({ setParticipantRaces }) => {
         "distanceName": "15 kilometers",
         "startDateTime": "2019-12-07T08:30:00",
         "actualTime": "0:48:33",
-        "actualPace": "05:13"
+        "actualPace": "05:13",
       }, {
         "runnerId": "25236052",
         "bib": "487",
@@ -90,7 +90,7 @@ const Participant = ({ setParticipantRaces }) => {
         "distanceName": "Marathon",
         "startDateTime": "2019-11-03T08:30:00",
         "actualTime": "2:27:56",
-        "actualPace": "05:39"
+        "actualPace": "05:39",
       }, {
         "runnerId": "25457996",
         "bib": "4291",
@@ -100,7 +100,7 @@ const Participant = ({ setParticipantRaces }) => {
         "distanceName": "Half-Marathon",
         "startDateTime": "2019-10-13T08:00:00",
         "actualTime": "1:09:02",
-        "actualPace": "05:16"
+        "actualPace": "05:16",
       }, {
         "runnerId": "23119993",
         "bib": "1057",
@@ -110,7 +110,7 @@ const Participant = ({ setParticipantRaces }) => {
         "distanceName": "1 mile",
         "startDateTime": "2019-09-08T07:30:00",
         "actualTime": "0:04:22",
-        "actualPace": "04:22"
+        "actualPace": "04:22",
       }, {
         "runnerId": "22646821",
         "bib": "2297",
@@ -120,7 +120,7 @@ const Participant = ({ setParticipantRaces }) => {
         "distanceName": "5 miles",
         "startDateTime": "2019-07-27T07:00:00",
         "actualTime": "0:24:45",
-        "actualPace": "04:57"
+        "actualPace": "04:57",
       }, {
         "runnerId": "23096789",
         "bib": "1442",
@@ -130,7 +130,7 @@ const Participant = ({ setParticipantRaces }) => {
         "distanceName": "10 kilometers",
         "startDateTime": "2019-06-15T07:45:00",
         "actualTime": "0:30:59",
-        "actualPace": "05:00"
+        "actualPace": "05:00",
       }, {
         "runnerId": "21113952",
         "bib": "2142",
@@ -140,7 +140,7 @@ const Participant = ({ setParticipantRaces }) => {
         "distanceName": "10 kilometers",
         "startDateTime": "2019-04-28T09:00:00",
         "actualTime": "0:30:39",
-        "actualPace": "04:56"
+        "actualPace": "04:56",
       }, {
         "runnerId": "19172840",
         "bib": "8239",
@@ -150,7 +150,7 @@ const Participant = ({ setParticipantRaces }) => {
         "distanceName": "5 kilometers",
         "startDateTime": "2018-11-03T08:30:00",
         "actualTime": "0:14:55",
-        "actualPace": "04:49"
+        "actualPace": "04:49",
       }];
 
       setRaces(r);

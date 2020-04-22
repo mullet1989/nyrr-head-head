@@ -4,6 +4,7 @@ import { debounce } from "lodash";
 const AthleteSelect = ({ onClick, onFocusIn, onFocusOut, isOpen }) => {
 
   let [results, setResults] = useState([]);
+  let [athleteName, setAthleteName] = useState("");
 
   const optionsAsync = async query => {
     const results = await fetch("https://results.nyrr.org/api/runners/search", {
@@ -13,19 +14,19 @@ const AthleteSelect = ({ onClick, onFocusIn, onFocusOut, isOpen }) => {
         "content-type": "application/json;charset=UTF-8",
         "sec-fetch-mode": "cors",
         "sec-fetch-site": "same-origin",
-        "token": "6112c32703f442f0"
+        "token": "6112c32703f442f0",
       },
       "referrer": "https://results.nyrr.org/home",
       "referrerPolicy": "no-referrer-when-downgrade",
       "body": JSON.stringify({
         "searchString": query,
         "pageIndex": 1,
-        "pageSize": 4,
+        "pageSize": 5,
         "sortColumn": null,
-        "sortDescending": false
+        "sortDescending": false,
       }),
       "method": "POST",
-      "mode": "cors"
+      "mode": "cors",
     });
 
     const r = await results.json();
@@ -35,6 +36,8 @@ const AthleteSelect = ({ onClick, onFocusIn, onFocusOut, isOpen }) => {
   let debounced;
 
   const onChange = e => {
+
+    setAthleteName(e.target.value);
 
     /* signal to React not to nullify the event object */
     e.persist();
@@ -51,23 +54,33 @@ const AthleteSelect = ({ onClick, onFocusIn, onFocusOut, isOpen }) => {
       setResults([
         { id: 25695694, label: "Benjamin Toomer" },
         { id: 25695694, label: "Benjamin Coomer" },
-        { id: 25695694, label: "Benjamin James" }
+        { id: 25695694, label: "Benjamin James" },
       ]);
     }
 
   };
 
   return (
-    <>
-      <input type="text" onFocus={onFocusIn} onMouseDown={onFocusOut} onChange={onChange}/>
-      <div>
+    <div style={{ border: "solid 1px", borderRadius: "5px", position: "relative", background: "white", zIndex: "100" }}>
+      <input type="text"
+             value={athleteName}
+             style={{ marginBottom: "0", fontSize: "1.2em", border: "none" }}
+             onFocus={onFocusIn}
+             onBlur={onFocusOut}
+             onChange={onChange}
+      />
+      <div style={{ position: "absolute", width: "100%", background: "white", marginTop: "5px" }}>
         {isOpen && results.map((r, i) =>
-          <div className="box" key={i}
-               onClick={x => onClick(r.runnerId)}>
-            {r.firstName} {r.lastName}
+          <div className="box"
+               key={i}
+               onMouseDown={x => {
+                 setAthleteName(`${r.firstName} ${r.lastName}`);
+                 onClick(r.runnerId);
+               }}>
+            {r.firstName} {r.lastName} - ({r.racesCount} races)
           </div>)}
       </div>
-    </>);
+    </div>);
 
 
 };
