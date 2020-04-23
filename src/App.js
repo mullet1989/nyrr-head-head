@@ -32,12 +32,36 @@ function App() {
   }, [p1Races, p2Races]);
 
   const headToHead = () => {
+    let winsA1 = 0;
+    let winsA2 = 0;
+
+    for (let [k, v] of Object.entries(bothRaced)) {
+      console.log(v);
+      if (bothRaced[k][0].actualTime < bothRaced[k][1].actualTime) {
+        winsA1++;
+      } else if (bothRaced[k][0].actualTime > bothRaced[k][1].actualTime) {
+        winsA2++;
+      }
+    }
+
     if (Object.keys(bothRaced).length) {
       return (
-        <div className="row">
-          <div className="column"/>
-          <div className="column"/>
-          <div className="column"/>
+        <div className="row" style={{ display: "flex", alignItems: "center", padding: "2rem 0" }}>
+          <div className="column">
+            <span>
+              {winsA1 > winsA2 && <span>👑</span>}
+              ({winsA1})
+            </span>
+          </div>
+          <div className="column">
+            {/*<input type="button" value="share this result" onClick={share}/>*/}
+          </div>
+          <div className="column">
+            <span>
+              {winsA2 > winsA1 && <span>👑</span>}
+              ({winsA2})
+            </span>
+          </div>
         </div>
       );
     }
@@ -56,9 +80,9 @@ function App() {
         </div>
       </div>
 
-      <div className="row">
+      <div className="row col">
         <div className="column">
-          <h4 style={{ textAlign: "left", marginTop: "2rem" }}>RED CORNER 🥊</h4>
+          <h4 style={{ textAlign: "left", marginTop: "2rem" }}>RED CORNER <span>🥊</span></h4>
           <Participant setParticipantRaces={x => setRaces(x, null)}/>
         </div>
 
@@ -85,7 +109,7 @@ function App() {
                   <div className="column">{bothRaced[k][0].eventName}</div>
                   <div
                     style={{
-                      backgroundColor: bothRaced[k][0].actualTime >= bothRaced[k][1].actualTime ? "darkseagreen" : "lightcoral",
+                      backgroundColor: bothRaced[k][0].actualTime > bothRaced[k][1].actualTime ? "darkseagreen" : "lightcoral",
                       fontWeight: "bold",
                       borderRadius: "25px",
                       color: "black",

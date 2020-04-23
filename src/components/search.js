@@ -1,10 +1,18 @@
-import React, { useState } from "react";
-import { debounce } from "lodash";
+import React, { useEffect, useState } from "react";
+import useDebounce from "../useDebounce";
 
 const AthleteSelect = ({ onClick, onFocusIn, onFocusOut, isOpen }) => {
 
   let [results, setResults] = useState([]);
   let [athleteName, setAthleteName] = useState("");
+
+  const debouncedSearchTerm = useDebounce(athleteName, 300);
+
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      optionsAsync(debouncedSearchTerm);
+    }
+  }, [debouncedSearchTerm]);
 
   const optionsAsync = async query => {
     const results = await fetch("https://results.nyrr.org/api/runners/search", {
@@ -33,24 +41,6 @@ const AthleteSelect = ({ onClick, onFocusIn, onFocusOut, isOpen }) => {
     setResults(r.response.items);
   };
 
-  let debounced;
-
-  const onChange = e => {
-
-    setAthleteName(e.target.value);
-
-    /* signal to React not to nullify the event object */
-    e.persist();
-
-    if (!debounced) {
-      debounced = debounce(() => {
-        let searchString = e.target.value;
-        optionsAsync(searchString);
-      }, 300);
-    }
-    debounced();
-
-  };
 
   return (
     <div style={{ border: "solid 1px", borderRadius: "5px", position: "relative", background: "white", zIndex: "100" }}>
@@ -59,7 +49,7 @@ const AthleteSelect = ({ onClick, onFocusIn, onFocusOut, isOpen }) => {
              style={{ marginBottom: "0", fontSize: "1.2em", border: "none" }}
              onFocus={onFocusIn}
              onBlur={onFocusOut}
-             onChange={onChange}
+             onChange={e => setAthleteName(e.target.value)}
       />
       <div style={{ position: "absolute", width: "100%", background: "white", marginTop: "5px" }}>
         {isOpen && results.map((r, i) =>

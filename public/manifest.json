@@ -11,7 +11,7 @@
       "src": "big-show-small.jpg",
       "type": "image/jpg",
       "sizes": "143x200"
-    },
+    }
   ],
   "start_url": ".",
   "display": "standalone",

@@ -29,7 +29,7 @@ const Participant = ({ setParticipantRaces }) => {
         "year": null,
         "distance": null,
         "pageIndex": 1,
-        "pageSize": 51,
+        "pageSize": 100,
         "sortColumn": "EventDate",
         "sortDescending": true,
       }),
